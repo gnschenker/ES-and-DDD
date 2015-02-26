@@ -1,17 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using EventStore.ClientAPI;
 using EventStore.ClientAPI.SystemData;
 
 namespace TaskManager.Infrastructure
 {
-    public class EventStoreConnectionFactory
+    public interface IEventStoreConnectionFactory
     {
-        private static IEventStoreConnection connection;
+        IEventStoreConnection Create(string connectionName);
+    }
 
-        public IEventStoreConnection GetOrCreate()
+    public class EventStoreConnectionFactory : IEventStoreConnectionFactory
+    {
+        private static readonly Dictionary<string, IEventStoreConnection> connections = 
+            new Dictionary<string, IEventStoreConnection>();
+
+        public IEventStoreConnection Create(string connectionName)
         {
-            if (connection == null)
+            if (connections.ContainsKey(connectionName) == false)
             {
                 var settings = ConnectionSettings
                     .Create()
@@ -19,10 +26,11 @@ namespace TaskManager.Infrastructure
                     .KeepReconnecting()
                     .KeepRetrying()
                     .SetDefaultUserCredentials(new UserCredentials("admin", "changeit"));
-                connection = EventStoreConnection.Create(settings, new IPEndPoint(IPAddress.Loopback, 1113), "TaskManager");
+                var connection = EventStoreConnection.Create(settings, new IPEndPoint(IPAddress.Loopback, 1113), connectionName);
                 connection.ConnectAsync().Wait();
+                connections.Add(connectionName, connection);
             }
-            return connection;
+            return connections[connectionName];
         }
     }
 }

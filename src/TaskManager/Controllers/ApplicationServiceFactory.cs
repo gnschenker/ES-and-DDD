@@ -12,7 +12,7 @@ namespace TaskManager.Controllers
             {
                 var idGenerator = new IdGenerator();
                 var factory = new AggregateFactory();
-                var connection = new EventStoreConnectionFactory().GetOrCreate();
+                var connection = new EventStoreConnectionFactory().Create("TaskManager");
                 var repository = new GesRepository(connection, factory);
                 var service = new TaskApplicationService(repository, idGenerator);
                 return (T)(object)service;

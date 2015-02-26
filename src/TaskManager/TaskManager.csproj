@@ -41,7 +41,16 @@
     <Reference Include="EventStore.ClientAPI">
       <HintPath>..\packages\EventStore.Client.3.0.1\lib\net40\EventStore.ClientAPI.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\mongocsharpdriver.1.10.0\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\mongocsharpdriver.1.10.0\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -77,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="log4net.xml" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -90,12 +100,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ApplicationServiceFactory.cs" />
+    <Compile Include="Infrastructure\AtomicWriterExtensions.cs" />
+    <Compile Include="Infrastructure\EventDispatcher.cs" />
+    <Compile Include="Infrastructure\EventDispatcherBootstrapper.cs" />
+    <Compile Include="Infrastructure\EventHeaders.cs" />
+    <Compile Include="Infrastructure\EventProcessor.cs" />
     <Compile Include="Infrastructure\EventStoreConnectionFactory.cs" />
     <Compile Include="Domain\AggregateFactory.cs" />
     <Compile Include="Infrastructure\IAggregateFactory.cs" />
+    <Compile Include="Infrastructure\IAtomicWriterFactory.cs" />
+    <Compile Include="Infrastructure\IEventDispatcher.cs" />
+    <Compile Include="Infrastructure\IMongoDbEventPositionRepository.cs" />
+    <Compile Include="Infrastructure\IResolvedEvent.cs" />
     <Compile Include="Infrastructure\MessageExtensions.cs" />
     <Compile Include="Infrastructure\MethodConstrainedRouteAttribute.cs" />
     <Compile Include="Infrastructure\MethodConstraint.cs" />
+    <Compile Include="Infrastructure\MongoDbAtomicWriter.cs" />
+    <Compile Include="Infrastructure\MongoDbAtomicWriterFactory.cs" />
+    <Compile Include="Infrastructure\MongoDbEventPositionRepository.cs" />
     <Compile Include="Infrastructure\PostRouteAttribute.cs" />
     <Compile Include="Controllers\TaskCommands.cs" />
     <Compile Include="Domain\CreateInfo.cs" />
@@ -115,7 +137,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\ResolvedEventExtensions.cs" />
+    <Compile Include="Infrastructure\ResolvedEventWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Infrastructure\IAtomicWriter.cs" />
+    <Compile Include="Infrastructure\IProjectionRegistry.cs" />
+    <Compile Include="ReadModel\ProjectionRegistry.cs" />
+    <Compile Include="ReadModel\TaskProjection.cs" />
+    <Compile Include="ReadModel\TaskView.cs" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

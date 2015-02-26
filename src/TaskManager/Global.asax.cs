@@ -1,14 +1,23 @@
 ﻿using System;
 using System.Net.Http;
 using System.Web.Http;
+using TaskManager.Infrastructure;
+using TaskManager.ReadModel;
 
 namespace TaskManager
 {
+    //**********************************************************************
+    // Create Folder:   c:\temp\mongo 
+    // Start Mongo:     mongod --dbpath c:\temp\mongo
+    // Start GES:       EventStore.ClusterNode.exe --db c:\temp\ES\TaskManger
+    //**********************************************************************
     public class Global : System.Web.HttpApplication
     {
         protected void Application_Start(object sender, EventArgs e)
         {
             GlobalConfiguration.Configure(SetupRouteInfo);
+
+            new EventDispatcherBootstrapper(new ProjectionRegistry()).Initialize();
         }
 
         private void SetupRouteInfo(HttpConfiguration config)
