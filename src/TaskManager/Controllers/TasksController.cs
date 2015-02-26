@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Routing;
+﻿using System.Web.Http;
 using TaskManager.Domain;
 using TaskManager.Infrastructure;
 
@@ -14,9 +11,7 @@ namespace TaskManager.Controllers
 
         public TasksController()
         {
-            var idGenerator = new IdGenerator();
-            var repository = new GESRepository();
-            service = new TaskApplicationService(repository, idGenerator);
+            service = new ApplicationServiceFactory().Create<TaskApplicationService>();
         }
 
         public TaskInfo Get(int id)

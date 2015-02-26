@@ -38,6 +38,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EventStore.ClientAPI">
+      <HintPath>..\packages\EventStore.Client.3.0.1\lib\net40\EventStore.ClientAPI.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -86,6 +89,11 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ApplicationServiceFactory.cs" />
+    <Compile Include="Infrastructure\EventStoreConnectionFactory.cs" />
+    <Compile Include="Domain\AggregateFactory.cs" />
+    <Compile Include="Infrastructure\IAggregateFactory.cs" />
+    <Compile Include="Infrastructure\MessageExtensions.cs" />
     <Compile Include="Infrastructure\MethodConstrainedRouteAttribute.cs" />
     <Compile Include="Infrastructure\MethodConstraint.cs" />
     <Compile Include="Infrastructure\PostRouteAttribute.cs" />
