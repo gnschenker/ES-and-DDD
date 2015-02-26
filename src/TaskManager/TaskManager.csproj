@@ -87,6 +87,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\CreateTask.cs" />
+    <Compile Include="Domain\CreateInfo.cs" />
+    <Compile Include="Infrastructure\GESRepository.cs" />
+    <Compile Include="Domain\CreateTaskCommand.cs" />
+    <Compile Include="Controllers\ExtendsCommands.cs" />
+    <Compile Include="Infrastructure\IAggregate.cs" />
+    <Compile Include="Infrastructure\IRepository.cs" />
+    <Compile Include="Domain\TaskApplicationService.cs" />
     <Compile Include="Controllers\TaskInfo.cs" />
     <Compile Include="Infrastructure\IdGenerator.cs" />
     <Compile Include="Domain\TaskAggregate.cs" />

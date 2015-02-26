@@ -7,11 +7,13 @@ namespace TaskManager.Controllers
     [RoutePrefix("api/tasks")]
     public class TasksController : ApiController
     {
-        private static readonly IIdGenerator idGenerator;
+        private readonly ITaskApplicationService service;
 
-        static TasksController()
+        public TasksController()
         {
-            idGenerator = new IdGenerator();
+            var idGenerator = new IdGenerator();
+            var repository = new GESRepository();
+            service = new TaskApplicationService(repository, idGenerator);
         }
 
         public TaskInfo Get(int id)
@@ -22,12 +24,11 @@ namespace TaskManager.Controllers
         [Route("create")]
         public object Post([FromBody]CreateTask command)
         {
-            var id = idGenerator.Next<TaskAggregate>();
-            // do something with the command!
+            var result = service.When(command.ToInternal());
             return new
             {
-                id = id,
-                defaultName = "Task " + id
+                id = result.Id,
+                defaultName = result.DefaultName
             };
         }
     }
