@@ -8,5 +8,9 @@ namespace TaskManager.Controllers
         {
             return new CreateTaskCommand();
         }
+        public static ChangeTaskNameCommand ToInternal(this ChangeTaskName c)
+        {
+            return new ChangeTaskNameCommand{TaskId = c.taskId, NewName = c.newName};
+        }
     }
 }

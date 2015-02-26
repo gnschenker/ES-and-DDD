@@ -5,6 +5,7 @@ namespace TaskManager.Domain
     public interface ITaskApplicationService
     {
         CreateInfo When(CreateTaskCommand cmd);
+        void When(ChangeTaskNameCommand cmd);
     }
 
     public class TaskApplicationService : ITaskApplicationService
@@ -26,6 +27,13 @@ namespace TaskManager.Domain
             agg.Create(id, defaultName);
             repository.Save(agg);
             return new CreateInfo{Id = id, DefaultName = defaultName};
+        }
+
+        public void When(ChangeTaskNameCommand cmd)
+        {
+            var agg = repository.GetById<TaskAggregate>(cmd.TaskId);
+            agg.ChangeName(cmd.NewName);
+            repository.Save(agg);
         }
     }
 }

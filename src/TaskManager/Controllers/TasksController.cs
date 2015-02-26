@@ -1,4 +1,7 @@
-﻿using System.Web.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Routing;
 using TaskManager.Domain;
 using TaskManager.Infrastructure;
 
@@ -21,8 +24,8 @@ namespace TaskManager.Controllers
             return null;
         }
 
-        [Route("create")]
-        public object Post([FromBody]CreateTask command)
+        [PostRoute("create")]
+        public object Create([FromBody]CreateTask command)
         {
             var result = service.When(command.ToInternal());
             return new
@@ -30,6 +33,12 @@ namespace TaskManager.Controllers
                 id = result.Id,
                 defaultName = result.DefaultName
             };
+        }
+
+        [PostRoute("changeName")]
+        public void ChangeName([FromBody]ChangeTaskName command)
+        {
+            service.When(command.ToInternal());
         }
     }
 }

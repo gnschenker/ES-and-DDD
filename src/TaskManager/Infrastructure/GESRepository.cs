@@ -6,5 +6,10 @@
         {
             
         }
+
+        public T GetById<T>(int id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
